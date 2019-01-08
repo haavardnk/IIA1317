@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace DAQ_Simulator
 {
+
     static class Program
     {
         /// <summary>
@@ -17,6 +18,7 @@ namespace DAQ_Simulator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
         }
     }
 }
