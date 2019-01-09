@@ -15,6 +15,7 @@ namespace DAQ_Simulator
         int dSensors = 3;
         int aSensors = 6;
         Sensor[] sObj;
+        double sCountDown;
 
         //General class for analog or digital sensor
         class Sensor
@@ -116,15 +117,23 @@ namespace DAQ_Simulator
                 }
                 //Start sampling time
                 sTime.Start();
-                sBtn.Text = "Wait";
+                sCountDown = Convert.ToDouble(sTimTxt.Text);
+                sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
             }
         }
 
         private void sTick_Tick(object sender, EventArgs e)
         {
+            //Take analog sample every tick
             for (int counter = 0; counter < aSensors; counter++)
             {
                 sObj[counter].SampleAnalogValue();
+            }
+            //Update wait timer countdown
+            if (sTime.Enabled)
+            {
+                sCountDown -= 0.1;
+                sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
             }
         }
 
@@ -136,12 +145,23 @@ namespace DAQ_Simulator
 
         private void sTimTxt_TextChanged(object sender, EventArgs e)
         {
+            //Update sample timer value with new value if valid
             if (double.TryParse(sTimTxt.Text, out double n))
             {
                 double timeDouble = Convert.ToDouble(sTimTxt.Text) * 1000;
                 int timeInt = Convert.ToInt32(timeDouble);
                 sTime.Interval = timeInt;
             }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("DAQ Simulator for sampling 6 analog and 3 digital sensors.\r\n" +
+                "- Click 'Sample' to take a sample from the sensors, " +
+                "analog sensors is filtered with Moving Average last second.\r\n" +
+                "- Click 'Log To File' to save all previous samples since last logging.\r\n" +
+                "- Minimum sampling and logging time is user specified, default to assignment spec.",
+                "About", System.Windows.Forms.MessageBoxButtons.OK);
         }
     }
 }
