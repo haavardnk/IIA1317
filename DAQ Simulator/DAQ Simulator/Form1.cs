@@ -18,6 +18,7 @@ namespace DAQ_Simulator
         Sensor[] sObj;
         double sCountDown;
         double lCountDown;
+        int nSamples;
 
         //General class for analog or digital sensor
         class Sensor
@@ -252,6 +253,9 @@ namespace DAQ_Simulator
                 {
                     File.AppendAllText(filePath, csv.ToString());
                 }
+                //Update text on UI with filename and times logged
+                nSamples += 1;
+                nSampleTxt.Text = "File: " + filePath + ", logged " + nSamples + " times";
             }
             //Start logging time
             lTime.Start();

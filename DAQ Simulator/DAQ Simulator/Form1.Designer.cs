@@ -50,6 +50,7 @@
             this.sTick = new System.Windows.Forms.Timer(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nSampleTxt = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -71,10 +72,10 @@
             // 
             // sTimTxt
             // 
-            this.sTimTxt.Location = new System.Drawing.Point(148, 32);
+            this.sTimTxt.Location = new System.Drawing.Point(171, 32);
             this.sTimTxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sTimTxt.Name = "sTimTxt";
-            this.sTimTxt.Size = new System.Drawing.Size(100, 22);
+            this.sTimTxt.Size = new System.Drawing.Size(77, 22);
             this.sTimTxt.TabIndex = 2;
             this.sTimTxt.Text = "4,4";
             this.sTimTxt.TextChanged += new System.EventHandler(this.sTimTxt_TextChanged);
@@ -105,9 +106,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 17);
+            this.label1.Size = new System.Drawing.Size(160, 17);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Next Sampling Time";
+            this.label1.Text = "Minimum Sampling Time";
             // 
             // groupBox2
             // 
@@ -125,6 +126,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.nSampleTxt);
             this.groupBox3.Controls.Add(this.lTimTxt);
             this.groupBox3.Controls.Add(this.lBtn);
             this.groupBox3.Controls.Add(this.label5);
@@ -139,10 +141,10 @@
             // 
             // lTimTxt
             // 
-            this.lTimTxt.Location = new System.Drawing.Point(148, 32);
+            this.lTimTxt.Location = new System.Drawing.Point(171, 32);
             this.lTimTxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lTimTxt.Name = "lTimTxt";
-            this.lTimTxt.Size = new System.Drawing.Size(100, 22);
+            this.lTimTxt.Size = new System.Drawing.Size(77, 22);
             this.lTimTxt.TabIndex = 2;
             this.lTimTxt.Text = "13";
             this.lTimTxt.TextChanged += new System.EventHandler(this.lTimTxt_TextChanged);
@@ -163,9 +165,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(5, 32);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(133, 17);
+            this.label5.Size = new System.Drawing.Size(153, 17);
             this.label5.TabIndex = 7;
-            this.label5.Text = "Next Sampling Time";
+            this.label5.Text = "Minimum Logging Time";
             // 
             // menuStrip1
             // 
@@ -244,6 +246,14 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // nSampleTxt
+            // 
+            this.nSampleTxt.AutoSize = true;
+            this.nSampleTxt.Location = new System.Drawing.Point(9, 121);
+            this.nSampleTxt.Name = "nSampleTxt";
+            this.nSampleTxt.Size = new System.Drawing.Size(0, 17);
+            this.nSampleTxt.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -297,6 +307,7 @@
         private System.Windows.Forms.Timer sTick;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Label nSampleTxt;
     }
 }
 
