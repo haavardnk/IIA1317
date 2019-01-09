@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DAQ_Simulator
 {
@@ -16,6 +17,7 @@ namespace DAQ_Simulator
         int aSensors = 6;
         Sensor[] sObj;
         double sCountDown;
+        double lCountDown;
 
         //General class for analog or digital sensor
         class Sensor
@@ -25,6 +27,8 @@ namespace DAQ_Simulator
             int sId;
             Random rSensVal;
             string sType;
+            List<string> sValues;
+            List<string> sTimes;
 
             //New sensor by sensor id and sensor type. Sensor type should be "a" for analog and "d" for digital.
             public Sensor(int id, string type)
@@ -32,6 +36,8 @@ namespace DAQ_Simulator
                 sId = id;
                 sType = type;
                 rSensVal = new Random(id);
+                sValues = new List<string>(0);
+                sTimes = new List<string>(0);
                 if (sType == "a")
                 {
                     aValues = new List<double>(10) { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -52,12 +58,21 @@ namespace DAQ_Simulator
             //Returns MA filtered sample for Analog sensor
             public double GetAnalogSample()
             {
-                return aValues.Average();
+                double a = aValues.Average();
+                //Save sample for logging
+                DateTime dateTime = DateTime.Now;
+                sTimes.Add(dateTime.ToString());
+                sValues.Add(a.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture));
+                return a;
             }
             //Returns Digital Sample
             public int GetDigitalSample()
             {
                 dVal = rSensVal.Next(0, 2);
+                //Save sample for logging
+                DateTime dateTime = DateTime.Now;
+                sTimes.Add(dateTime.ToString());
+                sValues.Add(dVal.ToString());
                 return dVal;
             }
             //Returns sensor id of given sensor
@@ -69,6 +84,21 @@ namespace DAQ_Simulator
             public string GetSensType()
             {
                 return sType;
+            }
+            //Returns all samples since last log
+            public List<String> GetSamples()
+            {
+                return sValues;
+            }
+            //Returns sample times
+            public List<String> GetSampleTimes()
+            {
+                return sTimes;
+            }
+            public void SetLogZero()
+            {
+                sTimes.Clear();
+                sValues.Clear();
             }
         }
 
@@ -129,11 +159,16 @@ namespace DAQ_Simulator
             {
                 sObj[counter].SampleAnalogValue();
             }
-            //Update wait timer countdown
+            //Update wait timer countdowns
             if (sTime.Enabled)
             {
                 sCountDown -= 0.1;
                 sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
+            }
+            if (lTime.Enabled)
+            {
+                lCountDown -= 0.1;
+                lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
             }
         }
 
@@ -162,6 +197,83 @@ namespace DAQ_Simulator
                 "- Click 'Log To File' to save all previous samples since last logging.\r\n" +
                 "- Minimum sampling and logging time is user specified, default to assignment spec.",
                 "About", System.Windows.Forms.MessageBoxButtons.OK);
+        }
+
+        private void lBtn_Click(object sender, EventArgs e)
+        {
+            if (!lTime.Enabled)
+            {
+                DateTime dateTime = DateTime.Today;
+                StringBuilder csv = new StringBuilder();
+                string filePath = dateTime.ToString("d") + ".csv";
+                //Adds column titles
+                if (!File.Exists(filePath))
+                {
+                    String title = " ,";
+                    for (int counter = 0; counter < sObj.Count(); counter++)
+                    {
+                        title +="Sensor " + sObj[counter].GetSensId().ToString();
+                        if (counter != sObj.Count()-1)
+                        {
+                            title += ",";
+                        }
+                    }
+                    csv.AppendLine(title);
+                }
+                List<String> sTimes = sObj[0].GetSampleTimes();
+                //Add samples
+                for (int counter = 0; counter < sTimes.Count(); counter++)
+                {
+                    string line = sTimes[counter] + ",";
+
+                    for (int counter2 = 0; counter2 < sObj.Count(); counter2++)
+                    {
+                        List<String> sValues = sObj[counter2].GetSamples();
+                        line += sValues[counter];
+                        if (counter2 != sObj.Count() - 1)
+                        {
+                            line += ",";
+                        }
+                    }
+                    csv.AppendLine(line);
+                        
+                }
+                //Clear saved samples
+                for (int counter = 0; counter < sObj.Count(); counter++)
+                {
+                    sObj[counter].SetLogZero();
+                }
+                //Make or append to file
+                if (!File.Exists(filePath))
+                {
+                    File.WriteAllText(filePath, csv.ToString());
+                }
+                else
+                {
+                    File.AppendAllText(filePath, csv.ToString());
+                }
+            }
+            //Start logging time
+            lTime.Start();
+            lCountDown = Convert.ToDouble(lTimTxt.Text);
+            lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
+        }
+
+        private void lTime_Tick(object sender, EventArgs e)
+        {
+            lTime.Stop();
+            lBtn.Text = "Log to File";
+        }
+
+        private void lTimTxt_TextChanged(object sender, EventArgs e)
+        {
+            //Update logging timer value with new value if valid
+            if (double.TryParse(lTimTxt.Text, out double n))
+            {
+                double timeDouble = Convert.ToDouble(lTimTxt.Text) * 1000;
+                int timeInt = Convert.ToInt32(timeDouble);
+                lTime.Interval = timeInt;
+            }
         }
     }
 }

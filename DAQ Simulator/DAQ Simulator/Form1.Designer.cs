@@ -145,6 +145,7 @@
             this.lTimTxt.Size = new System.Drawing.Size(100, 22);
             this.lTimTxt.TabIndex = 2;
             this.lTimTxt.Text = "13";
+            this.lTimTxt.TextChanged += new System.EventHandler(this.lTimTxt_TextChanged);
             // 
             // lBtn
             // 
@@ -155,6 +156,7 @@
             this.lBtn.TabIndex = 0;
             this.lBtn.Text = "Log to File";
             this.lBtn.UseVisualStyleBackColor = true;
+            this.lBtn.Click += new System.EventHandler(this.lBtn_Click);
             // 
             // label5
             // 
@@ -228,6 +230,7 @@
             // lTime
             // 
             this.lTime.Interval = 13000;
+            this.lTime.Tick += new System.EventHandler(this.lTime_Tick);
             // 
             // sTick
             // 
