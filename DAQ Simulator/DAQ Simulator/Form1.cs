@@ -103,6 +103,94 @@ namespace DAQ_Simulator
             }
         }
 
+        // Method to log saved samples to file
+        private void LogToFile()
+        {
+            DateTime dateTime = DateTime.Today;
+            StringBuilder csv = new StringBuilder();
+            string filePath = dateTime.ToString("d") + ".csv";
+            //Adds column titles
+            if (!File.Exists(filePath))
+            {
+                String title = " ,";
+                for (int counter = 0; counter < sObj.Count(); counter++)
+                {
+                    title += "Sensor " + sObj[counter].GetSensId().ToString();
+                    if (counter != sObj.Count() - 1)
+                    {
+                        title += ",";
+                    }
+                }
+                csv.AppendLine(title);
+            }
+            List<String> sTimes = sObj[0].GetSampleTimes();
+            //Add samples
+            for (int counter = 0; counter < sTimes.Count(); counter++)
+            {
+                string line = sTimes[counter] + ",";
+
+                for (int counter2 = 0; counter2 < sObj.Count(); counter2++)
+                {
+                    List<String> sValues = sObj[counter2].GetSamples();
+                    line += sValues[counter];
+                    if (counter2 != sObj.Count() - 1)
+                    {
+                        line += ",";
+                    }
+                }
+                csv.AppendLine(line);
+
+            }
+            //Clear saved samples
+            for (int counter = 0; counter < sObj.Count(); counter++)
+            {
+                sObj[counter].SetLogZero();
+            }
+            //Make or append to file
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, csv.ToString());
+            }
+            else
+            {
+                File.AppendAllText(filePath, csv.ToString());
+            }
+            //Update text on UI with filename and times logged
+            nSamples += 1;
+            nSampleTxt.Text = "File: " + filePath + ", logged " + nSamples + " times";
+            //Start logging time
+            lTime.Start();
+            lCountDown = Convert.ToDouble(lTimTxt.Text);
+            lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
+        }
+
+
+        //Method to Samples sensors and updates text boxes
+        private void SampleSensors()
+        {
+            //Clear current text
+            aTxt.Clear();
+            dTxt.Clear();
+            // Get the object values as a string
+            for (int counter = 0; counter < sObj.Count(); counter++)
+            {
+                if (sObj[counter].GetSensType() == "a")
+                {
+                    aTxt.AppendText("Sensor " + sObj[counter].GetSensId().ToString() + ": " +
+                        sObj[counter].GetAnalogSample().ToString("F3") + "V" + "\r\n");
+                }
+                else
+                {
+                    dTxt.AppendText("Sensor " + sObj[counter].GetSensId().ToString() + ": " +
+                        sObj[counter].GetDigitalSample().ToString() + "\r\n");
+                }
+            }
+            //Start sampling time
+            sTime.Start();
+            sCountDown = Convert.ToDouble(sTimTxt.Text);
+            sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -124,32 +212,20 @@ namespace DAQ_Simulator
         }
 
 
-
         private void sBtn_Click(object sender, EventArgs e)
         {
+            //Runs sampling if sampling timer not running
             if (!sTime.Enabled)
             {
-                //Clear current text
-                aTxt.Clear();
-                dTxt.Clear();
-                // Get the object values as a string
-                for (int counter = 0; counter < sObj.Count(); counter++)
-                {
-                    if (sObj[counter].GetSensType() == "a")
-                    {
-                        aTxt.AppendText("Sensor " + sObj[counter].GetSensId().ToString() + ": " +
-                            sObj[counter].GetAnalogSample().ToString("F3") + "V" + "\r\n");
-                    }
-                    else
-                    {
-                        dTxt.AppendText("Sensor " + sObj[counter].GetSensId().ToString() + ": " +
-                            sObj[counter].GetDigitalSample().ToString() + "\r\n");
-                    }
-                }
-                //Start sampling time
-                sTime.Start();
-                sCountDown = Convert.ToDouble(sTimTxt.Text);
-                sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
+                SampleSensors();
+            }
+        }
+        private void lBtn_Click(object sender, EventArgs e)
+        {
+            //Runs logging if logging timer not running
+            if (!lTime.Enabled)
+            {
+                LogToFile();
             }
         }
 
@@ -175,8 +251,15 @@ namespace DAQ_Simulator
 
         private void sTime_Tick(object sender, EventArgs e)
         {
+            //Stops sample timer when time is up and reset button text
             sTime.Stop();
             sBtn.Text = "Sample";
+        }
+        private void lTime_Tick(object sender, EventArgs e)
+        {
+            //Stops logging timer when time is up and reset button text
+            lTime.Stop();
+            lBtn.Text = "Log to File";
         }
 
         private void sTimTxt_TextChanged(object sender, EventArgs e)
@@ -190,85 +273,6 @@ namespace DAQ_Simulator
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("DAQ Simulator for sampling 6 analog and 3 digital sensors.\r\n" +
-                "- Click 'Sample' to take a sample from the sensors, " +
-                "analog sensors is filtered with Moving Average last second.\r\n" +
-                "- Click 'Log To File' to save all previous samples since last logging.\r\n" +
-                "- Minimum sampling and logging time is user specified, default to assignment spec.",
-                "About", System.Windows.Forms.MessageBoxButtons.OK);
-        }
-
-        private void lBtn_Click(object sender, EventArgs e)
-        {
-            if (!lTime.Enabled)
-            {
-                DateTime dateTime = DateTime.Today;
-                StringBuilder csv = new StringBuilder();
-                string filePath = dateTime.ToString("d") + ".csv";
-                //Adds column titles
-                if (!File.Exists(filePath))
-                {
-                    String title = " ,";
-                    for (int counter = 0; counter < sObj.Count(); counter++)
-                    {
-                        title +="Sensor " + sObj[counter].GetSensId().ToString();
-                        if (counter != sObj.Count()-1)
-                        {
-                            title += ",";
-                        }
-                    }
-                    csv.AppendLine(title);
-                }
-                List<String> sTimes = sObj[0].GetSampleTimes();
-                //Add samples
-                for (int counter = 0; counter < sTimes.Count(); counter++)
-                {
-                    string line = sTimes[counter] + ",";
-
-                    for (int counter2 = 0; counter2 < sObj.Count(); counter2++)
-                    {
-                        List<String> sValues = sObj[counter2].GetSamples();
-                        line += sValues[counter];
-                        if (counter2 != sObj.Count() - 1)
-                        {
-                            line += ",";
-                        }
-                    }
-                    csv.AppendLine(line);
-                        
-                }
-                //Clear saved samples
-                for (int counter = 0; counter < sObj.Count(); counter++)
-                {
-                    sObj[counter].SetLogZero();
-                }
-                //Make or append to file
-                if (!File.Exists(filePath))
-                {
-                    File.WriteAllText(filePath, csv.ToString());
-                }
-                else
-                {
-                    File.AppendAllText(filePath, csv.ToString());
-                }
-                //Update text on UI with filename and times logged
-                nSamples += 1;
-                nSampleTxt.Text = "File: " + filePath + ", logged " + nSamples + " times";
-            }
-            //Start logging time
-            lTime.Start();
-            lCountDown = Convert.ToDouble(lTimTxt.Text);
-            lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
-        }
-
-        private void lTime_Tick(object sender, EventArgs e)
-        {
-            lTime.Stop();
-            lBtn.Text = "Log to File";
-        }
-
         private void lTimTxt_TextChanged(object sender, EventArgs e)
         {
             //Update logging timer value with new value if valid
@@ -278,6 +282,15 @@ namespace DAQ_Simulator
                 int timeInt = Convert.ToInt32(timeDouble);
                 lTime.Interval = timeInt;
             }
+        }
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("DAQ Simulator for sampling 6 analog and 3 digital sensors.\r\n" +
+                "- Click 'Sample' to take a sample from the sensors, " +
+                "analog sensors is filtered with Moving Average last second.\r\n" +
+                "- Click 'Log To File' to save all previous samples since last logging.\r\n" +
+                "- Minimum sampling and logging time is user specified, default to assignment spec.",
+                "About", System.Windows.Forms.MessageBoxButtons.OK);
         }
     }
 }
