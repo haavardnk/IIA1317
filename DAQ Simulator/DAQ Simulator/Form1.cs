@@ -292,5 +292,10 @@ namespace DAQ_Simulator
                 "- Minimum sampling and logging time is user specified, default to assignment spec.",
                 "About", System.Windows.Forms.MessageBoxButtons.OK);
         }
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            //Button in menu to exit application
+            this.Close();
+        }
     }
 }

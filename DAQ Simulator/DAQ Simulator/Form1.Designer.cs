@@ -50,6 +50,7 @@
             this.lTime = new System.Windows.Forms.Timer(this.components);
             this.sTick = new System.Windows.Forms.Timer(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.exitBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -61,7 +62,7 @@
             // sBtn
             // 
             this.sBtn.Location = new System.Drawing.Point(7, 61);
-            this.sBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sBtn.Margin = new System.Windows.Forms.Padding(2);
             this.sBtn.Name = "sBtn";
             this.sBtn.Size = new System.Drawing.Size(111, 27);
             this.sBtn.TabIndex = 0;
@@ -72,7 +73,7 @@
             // sTimTxt
             // 
             this.sTimTxt.Location = new System.Drawing.Point(128, 26);
-            this.sTimTxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sTimTxt.Margin = new System.Windows.Forms.Padding(2);
             this.sTimTxt.Name = "sTimTxt";
             this.sTimTxt.Size = new System.Drawing.Size(59, 20);
             this.sTimTxt.TabIndex = 2;
@@ -82,7 +83,7 @@
             // aTxt
             // 
             this.aTxt.Location = new System.Drawing.Point(11, 26);
-            this.aTxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aTxt.Margin = new System.Windows.Forms.Padding(2);
             this.aTxt.Multiline = true;
             this.aTxt.Name = "aTxt";
             this.aTxt.Size = new System.Drawing.Size(183, 100);
@@ -92,9 +93,9 @@
             // 
             this.groupBox1.Controls.Add(this.aTxt);
             this.groupBox1.Location = new System.Drawing.Point(208, 25);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(202, 130);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
@@ -116,9 +117,9 @@
             this.groupBox2.Controls.Add(this.sBtn);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(9, 25);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(194, 130);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
@@ -131,9 +132,9 @@
             this.groupBox3.Controls.Add(this.lBtn);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Location = new System.Drawing.Point(9, 159);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(194, 117);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
@@ -151,7 +152,7 @@
             // lTimTxt
             // 
             this.lTimTxt.Location = new System.Drawing.Point(128, 26);
-            this.lTimTxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lTimTxt.Margin = new System.Windows.Forms.Padding(2);
             this.lTimTxt.Name = "lTimTxt";
             this.lTimTxt.Size = new System.Drawing.Size(59, 20);
             this.lTimTxt.TabIndex = 2;
@@ -161,7 +162,7 @@
             // lBtn
             // 
             this.lBtn.Location = new System.Drawing.Point(7, 61);
-            this.lBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lBtn.Margin = new System.Windows.Forms.Padding(2);
             this.lBtn.Name = "lBtn";
             this.lBtn.Size = new System.Drawing.Size(111, 28);
             this.lBtn.TabIndex = 0;
@@ -194,6 +195,8 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitBtn});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -209,7 +212,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -217,9 +220,9 @@
             // 
             this.groupBox4.Controls.Add(this.dTxt);
             this.groupBox4.Location = new System.Drawing.Point(208, 159);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(202, 118);
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
@@ -228,7 +231,7 @@
             // dTxt
             // 
             this.dTxt.Location = new System.Drawing.Point(11, 26);
-            this.dTxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dTxt.Margin = new System.Windows.Forms.Padding(2);
             this.dTxt.Multiline = true;
             this.dTxt.Name = "dTxt";
             this.dTxt.Size = new System.Drawing.Size(183, 88);
@@ -249,6 +252,13 @@
             this.sTick.Enabled = true;
             this.sTick.Tick += new System.EventHandler(this.sTick_Tick);
             // 
+            // exitBtn
+            // 
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(180, 22);
+            this.exitBtn.Text = "Exit";
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -260,7 +270,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "DAQ Simulator";
             this.groupBox1.ResumeLayout(false);
@@ -302,6 +312,7 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label nSampleTxt;
+        private System.Windows.Forms.ToolStripMenuItem exitBtn;
     }
 }
 
