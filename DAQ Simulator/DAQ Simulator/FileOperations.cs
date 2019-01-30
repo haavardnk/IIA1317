@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace DAQ_Simulator
@@ -29,7 +27,9 @@ namespace DAQ_Simulator
                 }
                 csv.AppendLine(title);
             }
+
             var sTimes = sObj[0].GetSampleTimes();
+
             //Add samples
             for (var i = 0; i < sTimes.Count(); i++)
             {

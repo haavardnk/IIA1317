@@ -1,40 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace DAQ_Simulator
 {
     public partial class Form1 : Form
     {
         //Initialize variables
-        const int DSensors = 3;
-        const int ASensors = 6;
-        Sensor[] sObj;
-        double sCountDown;
-        double lCountDown;
-        int nSamples;
+        private const int DigitalSensors = 3;
+        private const int AnalogSensors = 6;
+        private readonly Sensor[] _sObj;
+        private double _sampleCountDown;
+        private double _logCountDown;
+        private int _numberOfSamples;
 
         public Form1()
         {
             InitializeComponent();
             
-            sObj = new Sensor[ASensors + DSensors]; // Create an array of sensor objects
-            for (var i = 0; i < ASensors + DSensors; i++) // Creating the sensors
+            _sObj = new Sensor[AnalogSensors + DigitalSensors]; // Create an array of sensor objects
+            for (var i = 0; i < AnalogSensors + DigitalSensors; i++) // Creating the sensors
             {
-                if (i < ASensors)
+                if (i < AnalogSensors)
                 {
-                    sObj[i] = new Sensor(i, "a");
+                    _sObj[i] = new Sensor(i, "a");
                 }
                 else
                 {
-                    sObj[i] = new Sensor(i, "d");
+                    _sObj[i] = new Sensor(i, "d");
                 }
             }
         }
@@ -48,7 +40,7 @@ namespace DAQ_Simulator
                 aTxt.Clear();
                 dTxt.Clear();
 
-                var texts = SampleOperations.SampleSensors(sObj);
+                var texts = SampleOperations.SampleSensors(_sObj);
 
                 //Update text fields
                 aTxt.Text = texts[0].ToString();
@@ -56,8 +48,8 @@ namespace DAQ_Simulator
 
                 //Start sampling time
                 sTime.Start();
-                sCountDown = Convert.ToDouble(sTimTxt.Text);
-                sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
+                _sampleCountDown = Convert.ToDouble(sTimTxt.Text);
+                sBtn.Text = "Wait - " + _sampleCountDown.ToString("F0") + " s";
             }
         }
         private void lBtn_Click(object sender, EventArgs e)
@@ -65,35 +57,35 @@ namespace DAQ_Simulator
             //Runs logging if logging timer not running
             if (!lTime.Enabled)
             {
-                var filePath = FileOperations.LogToFile(sObj);
+                var filePath = FileOperations.LogToFile(_sObj);
 
                 //Update text on UI with filename and times logged
-                nSamples += 1;
-                nSampleTxt.Text = "File: " + filePath + ", logged " + nSamples + " times";
+                _numberOfSamples += 1;
+                nSampleTxt.Text = "File: " + filePath + ", logged " + _numberOfSamples + " times";
                 //Start logging time
                 lTime.Start();
-                lCountDown = Convert.ToDouble(lTimTxt.Text);
-                lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
+                _logCountDown = Convert.ToDouble(lTimTxt.Text);
+                lBtn.Text = "Wait - " + _logCountDown.ToString("F0") + " s";
             }
         }
 
         private void sTick_Tick(object sender, EventArgs e)
         {
             //Take analog sample every tick
-            for (var i = 0; i < ASensors; i++)
+            for (var i = 0; i < AnalogSensors; i++)
             {
-                sObj[i].SampleAnalogValue();
+                _sObj[i].SampleAnalogValue();
             }
             //Update wait timer countdowns
             if (sTime.Enabled)
             {
-                sCountDown -= 0.1;
-                sBtn.Text = "Wait - " + sCountDown.ToString("F0") + " s";
+                _sampleCountDown -= 0.1;
+                sBtn.Text = "Wait - " + _sampleCountDown.ToString("F0") + " s";
             }
             if (lTime.Enabled)
             {
-                lCountDown -= 0.1;
-                lBtn.Text = "Wait - " + lCountDown.ToString("F0") + " s";
+                _logCountDown -= 0.1;
+                lBtn.Text = "Wait - " + _logCountDown.ToString("F0") + " s";
             }
         }
 
