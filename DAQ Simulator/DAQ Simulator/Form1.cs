@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DAQ_Simulator
@@ -6,9 +7,10 @@ namespace DAQ_Simulator
     public partial class Form1 : Form
     {
         //Initialize variables
-        private const int DigitalSensors = 3;
-        private const int AnalogSensors = 6;
-        private readonly Sensor[] _sObj;
+        private const int DigitalSensorsCount = 3;
+        private const int AnalogSensorsCount = 6;
+        private readonly AnalogSensor[] _analogSensors = new AnalogSensor[AnalogSensorsCount];
+        private readonly DigitalSensor[] _digitalSensors = new DigitalSensor[DigitalSensorsCount];
         private double _sampleCountDown;
         private double _logCountDown;
         private int _numberOfSamples;
@@ -16,19 +18,20 @@ namespace DAQ_Simulator
         public Form1()
         {
             InitializeComponent();
-            
-            _sObj = new Sensor[AnalogSensors + DigitalSensors]; // Create an array of sensor objects
-            for (var i = 0; i < AnalogSensors + DigitalSensors; i++) // Creating the sensors
+
+            // Initialize sensors
+            for (var i = 0; i < AnalogSensorsCount + DigitalSensorsCount; i++)
             {
-                if (i < AnalogSensors)
+                if (i < AnalogSensorsCount)
                 {
-                    _sObj[i] = new Sensor(i, "a");
+                    _analogSensors[i] = new AnalogSensor(i);
                 }
                 else
                 {
-                    _sObj[i] = new Sensor(i, "d");
+                    _digitalSensors[i-AnalogSensorsCount] = new DigitalSensor(i);
                 }
             }
+
         }
         
         private void sBtn_Click(object sender, EventArgs e)
@@ -40,11 +43,12 @@ namespace DAQ_Simulator
                 aTxt.Clear();
                 dTxt.Clear();
 
-                var texts = SampleOperations.SampleSensors(_sObj);
+                var analogText = SampleOperations.SampleSensors(_analogSensors);
+                var digitalText = SampleOperations.SampleSensors(_digitalSensors);
 
                 //Update text fields
-                aTxt.Text = texts[0].ToString();
-                dTxt.Text = texts[1].ToString();
+                aTxt.Text = analogText.ToString();
+                dTxt.Text = digitalText.ToString();
 
                 //Start sampling time
                 sTime.Start();
@@ -57,7 +61,8 @@ namespace DAQ_Simulator
             //Runs logging if logging timer not running
             if (!lTime.Enabled)
             {
-                var filePath = FileOperations.LogToFile(_sObj);
+
+                var filePath = FileOperations.LogToFile(_analogSensors, _digitalSensors);
 
                 //Update text on UI with filename and times logged
                 _numberOfSamples += 1;
@@ -72,9 +77,9 @@ namespace DAQ_Simulator
         private void sTick_Tick(object sender, EventArgs e)
         {
             //Take analog sample every tick
-            for (var i = 0; i < AnalogSensors; i++)
+            for (var i = 0; i < AnalogSensorsCount; i++)
             {
-                _sObj[i].SampleAnalogValue();
+                _analogSensors[i].SampleToFilterBuffer();
             }
             //Update wait timer countdowns
             if (sTime.Enabled)

@@ -8,7 +8,7 @@ namespace DAQ_Simulator
     public class FileOperations
     {
         // Method to log saved samples to file
-        public static string LogToFile(Sensor[] sObj)
+        public static string LogToFile(Sensor[] analogSensors, Sensor[] digitalSensors)
         {
             var dateTime = DateTime.Today;
             var csv = new StringBuilder();
@@ -17,40 +17,50 @@ namespace DAQ_Simulator
             if (!File.Exists(filePath))
             {
                 var title = " ,";
-                for (var i = 0; i < sObj.Count(); i++)
+                foreach(var sensor in analogSensors)
                 {
-                    title += "Sensor " + sObj[i].GetSensId().ToString();
-                    if (i != sObj.Count() - 1)
-                    {
-                        title += ",";
-                    }
+                    title += "Sensor " + sensor.GetSensId() + ",";
                 }
+
+                foreach (var sensor in digitalSensors)
+                {
+                    title += "Sensor " + sensor.GetSensId() + ",";
+                }
+
+                title.Remove(title.Length -1);
                 csv.AppendLine(title);
             }
 
-            var sTimes = sObj[0].GetSampleTimes();
+            var sTimes = analogSensors[0].GetSampleTimes();
 
             //Add samples
             for (var i = 0; i < sTimes.Count(); i++)
             {
                 var line = sTimes[i] + ",";
-
-                for (var j = 0; j < sObj.Count(); j++)
+                
+                foreach (var sensor in analogSensors)
                 {
-                    var sValues = sObj[j].GetSampleBuffer();
-                    line += sValues[i];
-                    if (j != sObj.Count() - 1)
-                    {
-                        line += ",";
-                    }
+                    line += sensor.GetSampleBuffer() + ",";
                 }
+
+                foreach (var sensor in digitalSensors)
+                {
+                    line += sensor.GetSampleBuffer() + ",";
+                }
+      
+                line.Remove(line.Length - 1);
                 csv.AppendLine(line);
 
             }
             //Clear saved samples
-            for (var i = 0; i < sObj.Count(); i++)
+            foreach (var sensor in analogSensors)
             {
-                sObj[i].SetLogZero();
+                sensor.SetLogZero();
+            }
+
+            foreach (var sensor in digitalSensors)
+            {
+                sensor.SetLogZero();
             }
             //Make or append to file
             if (!File.Exists(filePath))

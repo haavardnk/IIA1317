@@ -11,8 +11,8 @@ namespace DAQ_Simulator
         public readonly int sensorId;
         public readonly Random randomSensorValue;
         public string sensorType;
-        public readonly List<string> sampleValues = new List<int>();
-        public readonly List<string> sampleTimes = new List<DateTime>();
+        public readonly List<string> sampleValues = new List<string>();
+        public readonly List<string> sampleTimes = new List<string>();
 
 
         //New sensor by sensor id and sensor type. Sensor type should be "a" for analog and "d" for digital.
@@ -49,5 +49,7 @@ namespace DAQ_Simulator
             sampleTimes.Clear();
             sampleValues.Clear();
         }
+
+
     }
 }
