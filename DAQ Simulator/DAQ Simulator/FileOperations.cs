@@ -37,7 +37,7 @@ namespace DAQ_Simulator
 
                 for (var j = 0; j < sObj.Count(); j++)
                 {
-                    var sValues = sObj[j].GetSamples();
+                    var sValues = sObj[j].GetSampleBuffer();
                     line += sValues[i];
                     if (j != sObj.Count() - 1)
                     {
