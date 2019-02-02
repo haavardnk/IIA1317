@@ -27,7 +27,7 @@ namespace DAQ_Simulator
                     title += "Sensor " + sensor.GetSensId() + ",";
                 }
 
-                title.Remove(title.Length -1);
+                title = title.TrimEnd(',');
                 csv.AppendLine(title);
             }
 
@@ -40,15 +40,15 @@ namespace DAQ_Simulator
                 
                 foreach (var sensor in analogSensors)
                 {
-                    line += sensor.GetSampleBuffer() + ",";
+                    line += sensor.GetSampleBuffer()[i] + ",";
                 }
 
                 foreach (var sensor in digitalSensors)
                 {
-                    line += sensor.GetSampleBuffer() + ",";
+                    line += sensor.GetSampleBuffer()[i] + ",";
                 }
       
-                line.Remove(line.Length - 1);
+                line = line.TrimEnd(',');
                 csv.AppendLine(line);
 
             }
