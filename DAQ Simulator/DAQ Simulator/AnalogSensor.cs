@@ -9,7 +9,7 @@ namespace DAQ_Simulator
         private readonly List<double> _analogValues;
         public AnalogSensor(int id) : base(id)
         {
-            sensorType = "Analog";
+            Type = "Analog";
             _analogValues = new List<double>(new double[10]);
         }
         // Returns MA filtered sample
@@ -22,6 +22,7 @@ namespace DAQ_Simulator
             sampleValues.Add(average.ToString("0.000", System.Globalization.CultureInfo.InvariantCulture));
             return average;
         }
+        // Background sampling
         public void SampleToFilterBuffer()
         {
             _analogValues.Insert(0, randomSensorValue.Next(0, 256) / 25.5);

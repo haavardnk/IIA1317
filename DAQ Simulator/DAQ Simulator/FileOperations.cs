@@ -19,12 +19,12 @@ namespace DAQ_Simulator
                 var title = " ,";
                 foreach(var sensor in analogSensors)
                 {
-                    title += "Sensor " + sensor.GetSensId() + ",";
+                    title += "Sensor " + sensor.Id + ",";
                 }
 
                 foreach (var sensor in digitalSensors)
                 {
-                    title += "Sensor " + sensor.GetSensId() + ",";
+                    title += "Sensor " + sensor.Id + ",";
                 }
 
                 title = title.TrimEnd(',');

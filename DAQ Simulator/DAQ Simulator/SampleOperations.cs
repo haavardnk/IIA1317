@@ -15,14 +15,14 @@ namespace DAQ_Simulator
             // Get the object values as a string
             for (var i = 0; i < sObj.Count(); i++)
             {
-                if (sObj[i].GetSensType() == "Analog")
+                if (sObj[i].Type == "Analog")
                 {
-                    text.Append("Sensor " + sObj[i].GetSensId().ToString() + ": " +
+                    text.Append("Sensor " + sObj[i].Id.ToString() + ": " +
                                     sObj[i].GetSample().ToString("F3") + "V" + "\r\n");
                 }
                 else
                 {
-                    text.Append("Sensor " + sObj[i].GetSensId().ToString() + ": " +
+                    text.Append("Sensor " + sObj[i].Id.ToString() + ": " +
                                     sObj[i].GetSample().ToString() + "\r\n");
                 }
             }
