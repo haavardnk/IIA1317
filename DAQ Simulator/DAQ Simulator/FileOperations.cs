@@ -62,6 +62,7 @@ namespace DAQ_Simulator
             {
                 sensor.SetLogZero();
             }
+
             //Make or append to file
             if (!File.Exists(filePath))
             {
