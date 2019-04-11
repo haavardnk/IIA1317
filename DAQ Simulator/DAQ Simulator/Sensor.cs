@@ -8,33 +8,24 @@ namespace DAQ_Simulator
     public abstract class Sensor
     {
 
-        public readonly int sensorId;
+        public string Type { get; set; }
+        public int Id { get; set; }
         public readonly Random randomSensorValue;
-        public string sensorType;
         public readonly List<string> sampleValues = new List<string>();
         public readonly List<string> sampleTimes = new List<string>();
+        
 
-
-        //New sensor by sensor id and sensor type. Sensor type should be "a" for analog and "d" for digital.
         protected Sensor(int id)
         {
-            sensorId = id;
+            Id = id;
             randomSensorValue = new Random(id);
         }
 
+        // Abstract to fill in subclasses
         public abstract double GetSample();
 
-        //Returns sensor id of given sensor
-        public int GetSensId()
-        {
-            return sensorId;
-        }
-        //Returns sensor type of given sensor
-        public string GetSensType()
-        {
-            return sensorType;
-        }
-        //Returns all samples since last log
+
+        //Returns all samples in buffer
         public List<string> GetSampleBuffer()
         {
             return sampleValues;
@@ -44,6 +35,8 @@ namespace DAQ_Simulator
         {
             return sampleTimes;
         }
+
+        // Clears sample buffer
         public void SetLogZero()
         {
             sampleTimes.Clear();
