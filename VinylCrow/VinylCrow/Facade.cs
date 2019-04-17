@@ -7,10 +7,11 @@ namespace VinylCrow
     public class Facade
     {
         private Database db = new Database();
-        public Facade()
+        public List<Record> GetRecordList()
         {
             var list = db.GetRecordList(0);
 
+            return list;
         }
     }
 }

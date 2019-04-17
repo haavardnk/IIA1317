@@ -41,30 +41,33 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnNew = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkLive = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkSigned = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.comboGenre = new System.Windows.Forms.ComboBox();
+            this.textPressing = new System.Windows.Forms.TextBox();
+            this.textColor = new System.Windows.Forms.TextBox();
+            this.comboCondition = new System.Windows.Forms.ComboBox();
+            this.checkLimited = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeYear = new System.Windows.Forms.DateTimePicker();
             this.textDescription = new System.Windows.Forms.RichTextBox();
             this.textArtist = new System.Windows.Forms.TextBox();
             this.textTitle = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.recordImage = new System.Windows.Forms.PictureBox();
+            this.fileDialogImage = new System.Windows.Forms.OpenFileDialog();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.recordImage)).BeginInit();
             this.SuspendLayout();
             // 
             // listRecord
@@ -76,6 +79,7 @@
             this.listRecord.Name = "listRecord";
             this.listRecord.Size = new System.Drawing.Size(273, 562);
             this.listRecord.TabIndex = 0;
+            this.listRecord.SelectedIndexChanged += new System.EventHandler(this.listRecord_SelectedIndexChanged);
             // 
             // btnCollection
             // 
@@ -177,39 +181,41 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.panel2.Controls.Add(this.checkBox3);
+            this.panel2.Controls.Add(this.btnSave);
+            this.panel2.Controls.Add(this.btnBrowse);
+            this.panel2.Controls.Add(this.checkLive);
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.checkBox2);
+            this.panel2.Controls.Add(this.checkSigned);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.comboBox3);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.textBox2);
-            this.panel2.Controls.Add(this.comboBox2);
-            this.panel2.Controls.Add(this.checkBox1);
+            this.panel2.Controls.Add(this.comboGenre);
+            this.panel2.Controls.Add(this.textPressing);
+            this.panel2.Controls.Add(this.textColor);
+            this.panel2.Controls.Add(this.comboCondition);
+            this.panel2.Controls.Add(this.checkLimited);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.dateTimePicker1);
+            this.panel2.Controls.Add(this.dateTimeYear);
             this.panel2.Controls.Add(this.textDescription);
             this.panel2.Controls.Add(this.textArtist);
             this.panel2.Controls.Add(this.textTitle);
-            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.recordImage);
             this.panel2.Location = new System.Drawing.Point(289, 27);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(974, 652);
             this.panel2.TabIndex = 8;
             // 
-            // checkBox3
+            // checkLive
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(473, 204);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 19;
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkLive.AutoSize = true;
+            this.checkLive.Location = new System.Drawing.Point(473, 204);
+            this.checkLive.Name = "checkLive";
+            this.checkLive.Size = new System.Drawing.Size(15, 14);
+            this.checkLive.TabIndex = 19;
+            this.checkLive.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -221,14 +227,14 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Seen live:";
             // 
-            // checkBox2
+            // checkSigned
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(473, 169);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 17;
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkSigned.AutoSize = true;
+            this.checkSigned.Location = new System.Drawing.Point(473, 169);
+            this.checkSigned.Name = "checkSigned";
+            this.checkSigned.Size = new System.Drawing.Size(15, 14);
+            this.checkSigned.TabIndex = 17;
+            this.checkSigned.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -240,48 +246,48 @@
             this.label7.TabIndex = 16;
             this.label7.Text = "Signed:";
             // 
-            // comboBox3
+            // comboGenre
             // 
-            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(781, 89);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(147, 26);
-            this.comboBox3.TabIndex = 15;
+            this.comboGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboGenre.FormattingEnabled = true;
+            this.comboGenre.Location = new System.Drawing.Point(781, 89);
+            this.comboGenre.Name = "comboGenre";
+            this.comboGenre.Size = new System.Drawing.Size(147, 26);
+            this.comboGenre.TabIndex = 15;
             // 
-            // textBox3
+            // textPressing
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(781, 126);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(147, 24);
-            this.textBox3.TabIndex = 14;
+            this.textPressing.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textPressing.Location = new System.Drawing.Point(781, 126);
+            this.textPressing.Name = "textPressing";
+            this.textPressing.Size = new System.Drawing.Size(147, 24);
+            this.textPressing.TabIndex = 14;
             // 
-            // textBox2
+            // textColor
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(781, 197);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(147, 24);
-            this.textBox2.TabIndex = 13;
+            this.textColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textColor.Location = new System.Drawing.Point(781, 197);
+            this.textColor.Name = "textColor";
+            this.textColor.Size = new System.Drawing.Size(147, 24);
+            this.textColor.TabIndex = 13;
             // 
-            // comboBox2
+            // comboCondition
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(781, 162);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(147, 26);
-            this.comboBox2.TabIndex = 12;
+            this.comboCondition.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboCondition.FormattingEnabled = true;
+            this.comboCondition.Location = new System.Drawing.Point(781, 162);
+            this.comboCondition.Name = "comboCondition";
+            this.comboCondition.Size = new System.Drawing.Size(147, 26);
+            this.comboCondition.TabIndex = 12;
             // 
-            // checkBox1
+            // checkLimited
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(473, 133);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 11;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkLimited.AutoSize = true;
+            this.checkLimited.Location = new System.Drawing.Point(473, 133);
+            this.checkLimited.Name = "checkLimited";
+            this.checkLimited.Size = new System.Drawing.Size(15, 14);
+            this.checkLimited.TabIndex = 11;
+            this.checkLimited.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -339,17 +345,18 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(361, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 18);
+            this.label1.Size = new System.Drawing.Size(42, 18);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Added:";
+            this.label1.Text = "Year:";
             // 
-            // dateTimePicker1
+            // dateTimeYear
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(420, 87);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 24);
-            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimeYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimeYear.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimeYear.Location = new System.Drawing.Point(473, 87);
+            this.dateTimeYear.Name = "dateTimeYear";
+            this.dateTimeYear.Size = new System.Drawing.Size(147, 24);
+            this.dateTimeYear.TabIndex = 4;
             // 
             // textDescription
             // 
@@ -375,13 +382,39 @@
             this.textTitle.Size = new System.Drawing.Size(564, 29);
             this.textTitle.TabIndex = 1;
             // 
-            // pictureBox1
+            // recordImage
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(11, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(332, 274);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.recordImage.Location = new System.Drawing.Point(11, 12);
+            this.recordImage.Name = "recordImage";
+            this.recordImage.Size = new System.Drawing.Size(332, 245);
+            this.recordImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.recordImage.TabIndex = 0;
+            this.recordImage.TabStop = false;
+            // 
+            // fileDialogImage
+            // 
+            this.fileDialogImage.FileName = "openFileDialog1";
+            this.fileDialogImage.Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|All files (*.*)|*.*\"";
+            this.fileDialogImage.Title = "Choose vinyl image";
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Location = new System.Drawing.Point(11, 263);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(115, 23);
+            this.btnBrowse.TabIndex = 20;
+            this.btnBrowse.Text = "Choose Image";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(888, 263);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 21;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -400,7 +433,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.recordImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,28 +452,31 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textPressing;
+        private System.Windows.Forms.TextBox textColor;
+        private System.Windows.Forms.ComboBox comboCondition;
+        private System.Windows.Forms.CheckBox checkLimited;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimeYear;
         private System.Windows.Forms.RichTextBox textDescription;
         private System.Windows.Forms.TextBox textArtist;
         private System.Windows.Forms.TextBox textTitle;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.PictureBox recordImage;
+        private System.Windows.Forms.CheckBox checkLive;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkSigned;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboGenre;
+        private System.Windows.Forms.Button btnNew;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.OpenFileDialog fileDialogImage;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
