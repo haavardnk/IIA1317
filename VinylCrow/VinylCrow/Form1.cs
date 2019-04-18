@@ -33,6 +33,11 @@ namespace VinylCrow
             }
 
             listRecord.EndUpdate();
+
+            if (listRecord.Items.Count > 0)
+            {
+                listRecord.SetSelected(0, true);
+            }
         }
 
         public void UpdateActive(Record record)
@@ -108,6 +113,13 @@ namespace VinylCrow
         private void btnNew_Click(object sender, EventArgs e)
         {
             _facade.NewRecord();
+            UpdateList(_facade.GetRecordList());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var record = listRecord.SelectedItem as Record;
+            _facade.DeleteRecord(record);
             UpdateList(_facade.GetRecordList());
         }
     }

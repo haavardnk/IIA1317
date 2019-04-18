@@ -23,5 +23,10 @@ namespace VinylCrow
         {
             db.CreateRecord();
         }
+
+        public void DeleteRecord(Record record)
+        {
+            db.DeleteRecord(record);
+        }
     }
 }

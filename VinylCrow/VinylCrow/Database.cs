@@ -13,7 +13,7 @@ namespace VinylCrow
         {
             var recordList = new List<Record>();
 
-            string selectSql = "select * from Record where CollectionId = " + id.ToString();
+            string selectSql = "select * from Record where CollectionId = " + id.ToString() + "order by Artist asc";
             con.Open();
             var cmd = new SqlCommand(selectSql, con);
 
@@ -95,6 +95,17 @@ namespace VinylCrow
         public void CreateRecord()
         {
             var selectSql = "EXEC CreateRecord";
+
+            con.Open();
+            var cmd = new SqlCommand(selectSql, con);
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void DeleteRecord(Record record)
+        {
+            var selectSql = "DELETE FROM Record WHERE RecordId =" + record.recordId.ToString();
 
             con.Open();
             var cmd = new SqlCommand(selectSql, con);
