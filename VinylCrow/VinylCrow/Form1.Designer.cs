@@ -177,6 +177,7 @@
             this.btnNew.TabIndex = 7;
             this.btnNew.Text = "New";
             this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // panel2
             // 
@@ -360,6 +361,7 @@
             // 
             // textDescription
             // 
+            this.textDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textDescription.Location = new System.Drawing.Point(11, 292);
             this.textDescription.Name = "textDescription";
             this.textDescription.Size = new System.Drawing.Size(952, 350);
@@ -415,6 +417,7 @@
             this.btnSave.TabIndex = 21;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // Form1
             // 

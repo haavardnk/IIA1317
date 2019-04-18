@@ -13,5 +13,15 @@ namespace VinylCrow
 
             return list;
         }
+
+        public void SaveRecord(Record record)
+        {
+            db.SaveRecord(record);
+        }
+
+        public void NewRecord()
+        {
+            db.CreateRecord();
+        }
     }
 }

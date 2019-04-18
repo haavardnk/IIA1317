@@ -22,6 +22,7 @@ namespace VinylCrow
 
         public void UpdateList(List<Record> list)
         {
+            listRecord.Items.Clear();
             listRecord.BeginUpdate();
 
             foreach (Record record in list)
@@ -32,7 +33,6 @@ namespace VinylCrow
             }
 
             listRecord.EndUpdate();
-            listRecord.SetSelected(0, true);
         }
 
         public void UpdateActive(Record record)
@@ -66,6 +66,24 @@ namespace VinylCrow
 
             UpdateActive(record);
         }
+
+        public void UpdateRecord(Record record)
+        {
+            record.title = textTitle.Text;
+            record.artist = textArtist.Text;
+            record.year = dateTimeYear.Value;
+            record.limited = checkLimited.Checked;
+            record.signed = checkSigned.Checked;
+            record.seenLive = checkLive.Checked;
+            record.genre = comboGenre.Text;
+            record.pressingNumber = textPressing.Text;
+            record.condition = comboCondition.Text;
+            record.color = textColor.Text;
+            record.description = textDescription.Text;
+
+            _facade.SaveRecord(record);
+            UpdateList(_facade.GetRecordList());
+        }
         private void listRecord_SelectedIndexChanged(object sender, EventArgs e)
         {
             var record = listRecord.SelectedItem as Record;
@@ -79,6 +97,18 @@ namespace VinylCrow
             var imgLoc = fileDialogImage.FileName.ToString();
             var record = listRecord.SelectedItem as Record;
             UpdateImage(record, imgLoc);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var record = listRecord.SelectedItem as Record;
+            UpdateRecord(record);
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            _facade.NewRecord();
+            UpdateList(_facade.GetRecordList());
         }
     }
 }
