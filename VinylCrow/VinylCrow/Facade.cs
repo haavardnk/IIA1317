@@ -6,27 +6,27 @@ namespace VinylCrow
 {
     public class Facade
     {
-        private Database db = new Database();
+        private Database _db = new Database();
         public List<Record> GetRecordList()
         {
-            var list = db.GetRecordList(0);
+            var list = _db.GetRecordList(0);
 
             return list;
         }
 
         public void SaveRecord(Record record)
         {
-            db.SaveRecord(record);
+            _db.SaveRecord(record);
         }
 
         public void NewRecord()
         {
-            db.CreateRecord();
+            _db.CreateRecord();
         }
 
         public void DeleteRecord(Record record)
         {
-            db.DeleteRecord(record);
+            _db.DeleteRecord(record);
         }
     }
 }

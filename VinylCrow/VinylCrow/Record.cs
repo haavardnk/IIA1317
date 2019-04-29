@@ -19,7 +19,6 @@ namespace VinylCrow
         public bool limited { get; set; }
         public bool seenLive { get; set; }
         public string description { get; set; }
-
         public string displayTitle { get; set; }
     }
 }

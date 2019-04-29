@@ -17,15 +17,16 @@ namespace VinylCrow
         public Form1()
         {
             InitializeComponent();
-            UpdateList(_facade.GetRecordList());
+            UpdateList(_facade.GetRecordList(), 0);
+            listRecord.SetSelected(0, true);
         }
 
-        public void UpdateList(List<Record> list)
+        public void UpdateList(List<Record> list, int selectIndex)
         {
             listRecord.Items.Clear();
             listRecord.BeginUpdate();
 
-            foreach (Record record in list)
+            foreach (var record in list)
             {
                 listRecord.DisplayMember = "displayTitle";
                 listRecord.ValueMember = "recordId";
@@ -33,26 +34,27 @@ namespace VinylCrow
             }
 
             listRecord.EndUpdate();
-
             if (listRecord.Items.Count > 0)
             {
-                listRecord.SetSelected(0, true);
+                listRecord.SetSelected(selectIndex, true);
             }
+            
+
         }
 
         public void UpdateActive(Record record)
         {
-            textTitle.Text = record.title;
-            textArtist.Text = record.artist;
+            textTitle.Text = record.title.Trim();
+            textArtist.Text = record.artist.Trim();
             dateTimeYear.Value = record.year;
             checkLimited.Checked = record.limited;
             checkSigned.Checked = record.signed;
             checkLive.Checked = record.seenLive;
-            comboGenre.Text = record.genre;
-            textPressing.Text = record.pressingNumber;
-            comboCondition.Text = record.condition;
-            textColor.Text = record.color;
-            textDescription.Text = record.description;
+            comboGenre.Text = record.genre.Trim();
+            textPressing.Text = record.pressingNumber.Trim();
+            comboCondition.Text = record.condition.Trim();
+            textColor.Text = record.color.Trim();
+            textDescription.Text = record.description.Trim();
 
             if (record.image != null)
             {
@@ -87,7 +89,8 @@ namespace VinylCrow
             record.description = textDescription.Text;
 
             _facade.SaveRecord(record);
-            UpdateList(_facade.GetRecordList());
+            var index = listRecord.Items.IndexOf(listRecord.SelectedItem);
+            UpdateList(_facade.GetRecordList(), index);
         }
         private void listRecord_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -113,14 +116,14 @@ namespace VinylCrow
         private void btnNew_Click(object sender, EventArgs e)
         {
             _facade.NewRecord();
-            UpdateList(_facade.GetRecordList());
+            UpdateList(_facade.GetRecordList(), 0);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             var record = listRecord.SelectedItem as Record;
             _facade.DeleteRecord(record);
-            UpdateList(_facade.GetRecordList());
+            UpdateList(_facade.GetRecordList(), 0);
         }
     }
 }

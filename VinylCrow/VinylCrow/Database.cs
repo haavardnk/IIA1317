@@ -6,16 +6,16 @@ namespace VinylCrow
 {
     public class Database
     {
-        public SqlConnection con = new SqlConnection(
+        private SqlConnection _con = new SqlConnection(
             @"Data Source=DESKTOP-PNGCAGM\SQLEXPRESS;Initial Catalog=CollectionDatabase;Trusted_Connection=True");
 
         public List<Record> GetRecordList(int id)
         {
             var recordList = new List<Record>();
 
-            string selectSql = "select * from Record where CollectionId = " + id.ToString() + "order by Artist asc";
-            con.Open();
-            var cmd = new SqlCommand(selectSql, con);
+            var selectSql = "select * from Record where CollectionId = " + id.ToString() + "order by Artist asc";
+            _con.Open();
+            var cmd = new SqlCommand(selectSql, _con);
 
             var dr = cmd.ExecuteReader();
 
@@ -47,31 +47,30 @@ namespace VinylCrow
                     recordList.Add(record);
                 }
             }
-            con.Close();
+            _con.Close();
             return recordList;
         }
 
         public void SaveRecord(Record record)
         {
-            var selectSql =
-                "UPDATE Record SET " +
-                "Title=@ti, " +
-                "Artist=@ar, " +
-                "Year=@ye, " +
-                "Genre=@ge, " +
-                "Color=@co, " +
-                "DateAdded=@da, " +
-                "Condition=@con, " +
-                "PressingNumber=@pn, " +
-                "Signed=@si, " +
-                "Limited=@li, " +
-                "SeenLive=@se, " +
-                "Description=@de, " +
-                "Image=@im " +
-                "WHERE RecordId = @id";
+            const string selectSql = "UPDATE Record SET " +
+                                     "Title=@ti, " +
+                                     "Artist=@ar, " +
+                                     "Year=@ye, " +
+                                     "Genre=@ge, " +
+                                     "Color=@co, " +
+                                     "DateAdded=@da, " +
+                                     "Condition=@con, " +
+                                     "PressingNumber=@pn, " +
+                                     "Signed=@si, " +
+                                     "Limited=@li, " +
+                                     "SeenLive=@se, " +
+                                     "Description=@de, " +
+                                     "Image=@im " +
+                                     "WHERE RecordId = @id";
 
-            con.Open();
-            var cmd = new SqlCommand(selectSql, con);
+            _con.Open();
+            var cmd = new SqlCommand(selectSql, _con);
 
             cmd.Parameters.AddWithValue("@ti", record.title);
             cmd.Parameters.AddWithValue("@ar", record.artist);
@@ -89,29 +88,29 @@ namespace VinylCrow
             cmd.Parameters.AddWithValue("@id", record.recordId);
 
             cmd.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
         }
 
         public void CreateRecord()
         {
-            var selectSql = "EXEC CreateRecord";
+            const string selectSql = "EXEC CreateRecord";
 
-            con.Open();
-            var cmd = new SqlCommand(selectSql, con);
+            _con.Open();
+            var cmd = new SqlCommand(selectSql, _con);
 
             cmd.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
         }
 
         public void DeleteRecord(Record record)
         {
             var selectSql = "DELETE FROM Record WHERE RecordId =" + record.recordId.ToString();
 
-            con.Open();
-            var cmd = new SqlCommand(selectSql, con);
+            _con.Open();
+            var cmd = new SqlCommand(selectSql, _con);
 
             cmd.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
         }
     }
 }
